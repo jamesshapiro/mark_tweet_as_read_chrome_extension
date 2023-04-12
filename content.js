@@ -1,14 +1,13 @@
-async function queryBackendAPI(tweetID) {
-    const response = await fetch(`[SECRET_ENDPOINT_HERE]?value=${tweetID}`);
-    
-    const data = await response.json();
-    console.log(data)
-    return data.result === "true"
+async function isTweetVisited(tweetID) {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(tweetID, (result) => {
+      resolve(result[tweetID])
+    })
+  })
 }
 
 const allTweets = new Set();
 
-  
 async function extractTweetIDs() {
     const tweetElements = document.querySelectorAll('[data-testid="tweet"]');
 
@@ -26,9 +25,11 @@ async function extractTweetIDs() {
                 console.log(`TweetID: ${id}`);
                 
 
-                const isVisited = await queryBackendAPI(id);
+                const isVisited = await isTweetVisited(id)
                 if (isVisited) {
-                    tweetElement.style.backgroundColor = '#212540';
+                  tweetElement.style.backgroundColor = '#212540'
+                } else {
+                  chrome.storage.local.set({ [id]: true })
                 }
             }
         }

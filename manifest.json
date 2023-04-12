@@ -1,20 +1,17 @@
 {
-    "manifest_version": 2,
-    "name": "Mark Tweets as Read",
-    "description": "A Chrome extension that marks tweets as read.",
-    "version": "1.0",
-    "permissions": [
-        "https://api.twitter.com/*",
-        "https://twitter.com/*"
-    ],
-    "content_scripts": [
+  "manifest_version": 2,
+  "name": "Mark Tweets as Read",
+  "description": "A Chrome extension that marks tweets as read.",
+  "version": "1.0",
+  "permissions": [
+    "https://api.twitter.com/*",
+    "https://twitter.com/*",
+    "storage"
+  ],
+  "content_scripts": [
     {
-      "matches": [
-        "https://twitter.com/*"
-      ],
-      "js": [
-        "content.js"
-      ]
+      "matches": ["https://twitter.com/*"],
+      "js": ["content.js"]
     }
   ]
 }
